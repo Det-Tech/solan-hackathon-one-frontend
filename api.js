@@ -546,3 +546,14 @@ export const aiChat = async (data) => {
         return {success:false, message: "Server Error"}
     }
 }
+
+
+export const createPayment = async (data) => {
+    console.log("creatPayment...");
+    try {
+      const res = (await api.post(`${config.backend_url}/api/payment/create_payment`, data)).data;
+      return res;
+    } catch (err) {
+      return { success: false, message: "Server Error" };
+    }
+  }; 
