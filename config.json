@@ -1,6 +1,6 @@
 {
-    "backend_url": "https://crossmint-backend.texaglo.com",
-    "backend_url1": "http://127.0.0.1:7000",
+    "backend_url1": "https://crossmint-backend.texaglo.com",
+    "backend_url": "http://127.0.0.1:7000",
     "frontend_url": "https://solana-texaglo.vercel.app",
     "devnetRPC": "https://api.devnet.solana.com",
     "mainnetRPC":"https://api.mainnet-beta.solana.com",
@@ -12,5 +12,5 @@
     "twitter": "https://twitter.com/Bump739096",
     "app": "https://drive.google.com/file/d/1oLIWJUYaPRp4bW6dlRzhThcLSuOpyBoF/view?usp=drive_link",
     "crossmint": "https://crossmint.texaglo.com",
-    "stripe_pubkey": "pk_test_51NuIKtGSeIXWr6sy8zvifdWd8DUksZOIyfndl4FQW71WYfwK9tgfeQPkmKztAKXdSbNDsQOtEQnWsmpsHjBsV6vU00Y4IYLbhj"
+    "stripe_pubkey": "pk_test_51O2pevERVjC7tdMDTqjoKNtaZ7TuS8Pyo3f30hCVZdoZC6Uf0n4V1trlil1uftxooGRlwhhmqb3L2f9WWto3mKN70092mXP3Bm"
 }
