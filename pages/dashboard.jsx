@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import PostProduct from "../Components/PostProduct/PostProduct";
+import CreateProduct from "../Components/PostProduct/PostProduct";
+import CreateStore from "../Components/CreateStore/CreateStore";
+import AllProducts from "../Components/Products/Products";
+import Delivery from "../Components/Delivery/Delivery";
 import ProductData from "../Components/ProductData/ProductData";
 import DataComp from "../Components/DataComp/DataComp";
 import Customize from "../Components/Customize/Customize";
@@ -27,12 +30,15 @@ const Dashboard = () => {
           <NavProfile />
         </div>
         <div className="dashboard_comp">
-          {index == 1 && <PostProduct />}
-          {index == 2 && <ProductData />}
-          {index == 3 && <DataComp />}
-          {index == 4 && <Customize />}
-          {index == 5 && <Survey />}
-          {index == 6 && <AddAi />}
+          {index == 1 && <CreateProduct />}  {/* create product */}          
+          {index == 2 && <CreateStore />}  {/* create store */}
+          {index == 3 && <AllProducts />}  {/* all products */}
+          {index == 4 && <Delivery />}     {/* deliveries */}
+          {index == 5 && <ProductData />}  {/* product */}
+          {index == 6 && <DataComp />}     {/* data */}
+          {index == 7 && <Customize />}    {/* colors */}
+          {index == 8 && <Survey />}       {/* survey */}
+          {index == 9 && <AddAi />}        {/* ai */}
         </div>
       </div>
     </>

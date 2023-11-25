@@ -40,7 +40,7 @@ const GlobalProviders = (props) => {
         product_link: "nfc",
         product_payment: "dollar",
         product_qrcode: "physical",
-        quantity: 0,
+        quantity: "",
 
         background_color: "",
         button1_color: "",

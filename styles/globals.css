@@ -469,6 +469,19 @@ body {
   }
 }
 
+
+@media screen and (max-width: 1200px) {
+  .dashboard_comp {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .dashboard_comp {
+    width: 90%;
+  }
+}
+
 /* ====== Animation End ======== */
 
 
