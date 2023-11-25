@@ -20,6 +20,12 @@
     display: flex;
 }
 
+.data_cash_label {
+    bottom: 0px;
+    transform: translate(-50%, 50%) !important;
+    font-size: 22px !important;
+}
+
 .data_box_single {
     width: 300.955px;
     height: 244px;

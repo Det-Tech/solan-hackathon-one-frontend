@@ -63,17 +63,19 @@ const DataComp = () => {
           <div className={Style.data_box_single}>
             <Image className={Style.circle} src={images.circle} alt="image" />
             <p>${summary_data.cash_flow}</p>
+            <p className={Style.data_cash_label}>Cashflow</p>
           </div>
           <div className={Style.data_box_single}>
             <Image className={Style.circle} src={images.circle} alt="image" />
             <p>{summary_data.crypto_flow} Sol</p>
+            <p className={Style.data_cash_label}>Crypto Flow</p>
           </div>
         </div>
         <div className={Style.data_information_box}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6} sx={{ paddingLeft: "45px !important", paddingRight: "30px"}}>
               <div className={Style.data_bars}>
-                <h3>Data collected </h3>
+                <h3>Sales by month </h3>
                 <div className={Style.data_bars_single}>
                   <p>Reviews</p>
                   <progress id="p0" value={summary_data.review} max="100"></progress>
