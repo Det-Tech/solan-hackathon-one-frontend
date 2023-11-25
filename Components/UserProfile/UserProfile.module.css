@@ -197,6 +197,10 @@
     width: 465px;
 }
 
+.notification_container {
+    display: flex;
+}
+
 .user_details_third_card {
     width: 465px;
     height: 609px;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 //INTERNAL IMPORT
 import Style from "./UserProfile.module.css";
@@ -8,10 +7,43 @@ import NavProfile from "../NavProfile/NavProfile";
 import { Connection } from "@solana/web3.js";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { getOauthStripe, getRefer, getStripeIDFromToken, getUserIdFromToken } from "../../api";
+import {
+  getOauthStripe,
+  getRefer,
+  getStripeIDFromToken,
+  getUserIdFromToken,
+} from "../../api";
 import { toast } from "react-toastify";
+import Switch from "@mui/material/Switch";
+import { styled } from "@mui/material/styles";
 
 const config = require("./../../config.json");
+
+const AntSwitch = styled(Switch)(({ theme }) => ({
+  width: "80px",
+  height: "45px",
+  borderRadius: "100px",
+  "& .MuiSwitch-switchBase": {
+    borderRadius: "100px",
+    transform: "translate(6px, 6px)",
+    "&.Mui-checked": {
+      transform: "translate(39px, 6px)",
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "0 2px 4px 0 rgb(0 35 11 / 20%)",
+    width: 16,
+    height: 16,
+    borderRadius: 10,
+    backgroundColor: "#551BF9",
+  },
+  "& .MuiSwitch-track": {
+    backgroundColor: "#7748f769 !important",
+    borderRadius: 32 / 2,
+    opacity: 1,
+    boxSizing: "border-box",
+  },
+}));
 
 const UserProfile = () => {
   const { publicKey } = useWallet();
@@ -19,7 +51,6 @@ const UserProfile = () => {
   const [refer, setRefer] = useState([]);
   const [refer_link, setReferLink] = useState("");
   const [stripe_id, setStripeID] = useState();
-  
 
   const fetchWalletForNFTs = async (address) => {
     const connection = new Connection(config.mainnetRPC, "confirmed");
@@ -74,14 +105,14 @@ const UserProfile = () => {
     });
   };
 
-  const connect = async()=>{
+  const connect = async () => {
     const data = {
       user_id: getUserIdFromToken(),
-    }
+    };
     const res = await getOauthStripe(data);
-    if(res.success) window.open(res.message, "_blank")
-    console.log(res)
-  }
+    if (res.success) window.open(res.message, "_blank");
+    console.log(res);
+  };
 
   return (
     <>
@@ -157,7 +188,30 @@ const UserProfile = () => {
             -WHEN YOU PURCHASE A POINT YOUR ENTRY WILL COUNT AS 1 POINT X N OF
             UNCLAIMED POINTS.
           </p>
-        </div>       
+        </div>
+
+        <div className={Style.user_details_third}>
+          <h1 className={Style.user_details_title}>Notification settings</h1>
+          <div className={Style.user_details_third_card}  style={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center"}}>
+            <p>DISABLE / ENABLE</p>
+            <div>
+            Email
+            <AntSwitch
+              onChange={() => {
+              }}
+              inputProps={{ "aria-label": "ant design" }}
+            />
+            </div>
+            <div>
+             App
+            <AntSwitch
+              onChange={() => {
+              }}
+              inputProps={{ "aria-label": "ant design" }}
+            />
+            </div>
+          </div>
+        </div>
       </div>
       <div className={Style.user_details_section}>
         <div>
