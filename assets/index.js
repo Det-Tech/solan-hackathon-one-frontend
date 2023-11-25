@@ -32,6 +32,9 @@ import left_double_arrow from "./left_double_arrow.png";
 import ai_help from "./ai_help.png";
 import down from "./down.png";
 import texaglo_ai from "./texaglo_ai.png";
+import fake_product from "./fake_product.png";
+import technoking from "./technoking.png";
+import assembly from "./assembly.png";
 
 export default {
   navpic,
@@ -68,4 +71,7 @@ export default {
   ai_help,
   down,
   texaglo_ai,
+  fake_product,
+  technoking,
+  assembly
 };
