@@ -14,6 +14,11 @@ import { createOrder, getUserIdFromToken, updateQuantity } from "../../api";
 import { useGlobal } from "../../context/GlobalContext";
 import { Grid } from "@mui/material";
 import { useWallet } from "@solana/wallet-adapter-react";
+import BumpFileUpload from "./BumpFileUpload";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const htmlToImage = require("html-to-image");
 const config = require("./../../config.json");
@@ -48,6 +53,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 const PostProduct = () => {
   const { publicKey } = useWallet();
   const fileInputRef = useRef(null);
+  const fileInputExcelRef = useRef(null);
   const { productDataHandle, product_data, editProduct, editProductHandle } =
     useGlobal();
 
@@ -118,7 +124,6 @@ const PostProduct = () => {
     }
   };
 
-  
   const orderEditHandle = async () => {
     if (!publicKey) {
       toast.warning("Please connect the wallet", {
@@ -203,7 +208,7 @@ const PostProduct = () => {
     const formData = {
       product_id,
       quantity: product_data.quantity,
-      edit: false
+      edit: false,
     };
 
     console.log("formData-> ", formData);
@@ -235,12 +240,14 @@ const PostProduct = () => {
       return;
     }
 
-    setQrcodeValue(`${config.frontend_url}/product/${product_data?.product_id}`);
+    setQrcodeValue(
+      `${config.frontend_url}/product/${product_data?.product_id}`
+    );
 
     const formData = {
       product_id: product_data?.product_id,
       quantity: product_data.quantity,
-      edit: true
+      edit: true,
     };
 
     console.log("formData-> ", formData);
@@ -277,18 +284,18 @@ const PostProduct = () => {
       });
   };
 
-
-  useEffect(()=>{
-    console.log(product_data)
-  }, [product_data])
+  useEffect(() => {
+    console.log(product_data);
+  }, [product_data]);
 
   return (
     <>
       <div className={Style.product_section}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={7} sx={{ padding: "30px" }}>
+          <Grid item xs={12} md={1}></Grid>
+          <Grid item xs={12} md={6} sx={{ padding: "30px" }}>
             <div className={Style.product_post_section}>
-              <h1>Post a product to Bump-me</h1>
+              <h1>Post a product</h1>
               <div className={Style.product_post_input}>
                 <div className={Style.product_data_input}>
                   <div className={Style.toggle_switch_container}>
@@ -297,103 +304,189 @@ const PostProduct = () => {
                         display: "flex",
                         marginLeft: "-30px",
                         marginTop: "30px",
+                        gap: "30px",
                       }}
                     >
-                      <AntSwitch
-                        onChange={() => {
-                          productDataHandle(
-                            "product_type",
-                            product_data.product_type == "local"
-                              ? "digital"
-                              : "local"
-                          );
-                        }}
-                        checked={product_data?.product_qrcode == "local"? true: false}
-                        inputProps={{ "aria-label": "ant design" }}
-                      />
-
-                      <div
-                        style={{
-                          marginLeft: "-15px",
-                          marginTop: "-5px",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <label
-                          style={{ fontSize: "17px", color: "white" }}
-                          onClick={() => {
-                            productDataHandle("product_type", "local");
-                          }}
-                        >
-                          local product
-                        </label>
-                        <span style={{ height: "10px" }}></span>
-                        <label
-                          style={{ fontSize: "17px", color: "white" }}
-                          onClick={() => {
-                            productDataHandle("product_type", "digital");
-                          }}
-                        >
-                          Digital product
-                        </label>
+                      <div>
+                        <h2 style={{ textAlign: "center" }}>One</h2>
+                        <BumpFileUpload
+                          click={() => fileInputRef.current.click()}
+                          fileInputRef={fileInputRef}
+                          addFile={addFile}
+                          title={"Add image"}
+                        />
                       </div>
-                      <div
-                        className={Style.product_file_input}
-                        onClick={() => fileInputRef.current.click()}
-                        onChange={addFile}
-                      >
-                        <input
-                          type="file"
-                          style={{ display: "none" }}
-                          ref={fileInputRef}
+
+                      <h3 style={{ alignSelf: "center" }}>or</h3>
+                      <div>
+                        <h2 style={{ textAlign: "center" }}>Multiple</h2>
+                        <BumpFileUpload
+                          click={() => fileInputExcelRef.current.click()}
+                          fileInputRef={fileInputExcelRef}
+                          addFile={addFile}
+                          title={"Use Excel"}
                         />
-                        <Image
-                          className={Style.circle}
-                          src={images.circle}
-                          alt="image"
-                        />
-                        <span>+</span>
-                        <p>Add image</p>
                       </div>
                     </div>
                   </div>
 
-                  <p>I want my product to be :</p>
-
                   <div className={Style.content_input}>
-                    <label htmlFor="">named:</label>
                     <input
                       type="text"
                       value={product_data?.product_name}
                       onChange={(e) => {
                         productDataHandle("product_name", e.target.value);
                       }}
+                      style={{
+                        maxWidth: "300px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                      placeholder="Enter Name"
                     />
                   </div>
                   <div className={Style.content_input}>
-                    <label htmlFor="">cost:</label>
                     <input
                       type="text"
                       value={product_data?.product_cost}
                       onChange={(e) => {
                         productDataHandle("product_cost", e.target.value);
                       }}
+                      placeholder="Cost"
+                      style={{
+                        maxWidth: "300px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
                     />
                   </div>
                   <div className={Style.content_input}>
-                    <label htmlFor="">Described: </label>
-                    <textarea
-                      id="w3review"
-                      name="w3review"
-                      rows="4"
-                      cols="50"
+                    <input
+                      type="text"
                       value={product_data?.product_des}
                       onChange={(e) => {
                         productDataHandle("product_desc", e.target.value);
                       }}
-                    ></textarea>
+                      placeholder="Product Description"
+                      style={{
+                        maxWidth: "300px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                    />
+                  </div>
+                  <div className={Style.content_input}>
+                    <input
+                      type="text"
+                      value={product_data?.quantity}
+                      onChange={(e) => {
+                        productDataHandle("quantity", e.target.value);
+                      }}
+                      placeholder="Quantity"
+                      style={{
+                        maxWidth: "300px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                    />
+                  </div>
+                  <div className={Style.content_input}>
+                    <FormControl
+                      style={{
+                        borderRadius: "10px",
+                        minWidth: "200px",
+                        background: "white",
+                        color: "black",
+                      }}
+                    >
+                      <Select
+                        labelId="delivery-select-label"
+                        id="delivery-select"
+                        // value={age}
+                        label="Age"
+                        defaultValue={"Delivery Method"}
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"Delivery Method"}>
+                          Delivery Method
+                        </MenuItem>
+                        <MenuItem value={"Super"}>Super</MenuItem>
+                        <MenuItem value={"Fast"}>Fast</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className={Style.content_input}>
+                    <FormControl
+                      style={{
+                        borderRadius: "10px",
+                        minWidth: "200px",
+                        background: "white",
+                        color: "black",
+                      }}
+                    >
+                      <Select
+                        labelId="payment-select-label"
+                        id="payment-select"
+                        // value={age}
+                        label="Age"
+                        defaultValue={"Payment Type"}
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"Payment Type"}>Payment Type</MenuItem>
+                        <MenuItem value={"Super"}>Super</MenuItem>
+                        <MenuItem value={"Fast"}>Fast</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className={Style.content_input}>
+                    <FormControl
+                      style={{
+                        borderRadius: "10px",
+                        minWidth: "200px",
+                        background: "white",
+                        color: "black",
+                      }}
+                    >
+                      <Select
+                        labelId="category-select-label"
+                        id="category-select"
+                        // value={age}
+                        label="Age"
+                        defaultValue={"Category"}
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"Category"}>Category</MenuItem>
+                        <MenuItem value={"Flower"}>Flower</MenuItem>
+                        <MenuItem value={"Edibles"}>Edibles</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  {editProduct ? (
+                    <div
+                      className={Style.product_order_btn}
+                      style={{ maxWidth: "300px" }}
+                      onClick={orderEditHandle}
+                    >
+                      Edit Product
+                    </div>
+                  ) : (
+                    <div
+                      className={Style.product_order_btn}
+                      style={{ maxWidth: "300px" }}
+                      onClick={orderCreateHandle}
+                    >
+                      Create Product
+                    </div>
+                  )}
+                  <div
+                    className={Style.product_order_btn}
+                    style={{ maxWidth: "300px" }}
+                    onClick={createQuantityAndDownload} // editQuantityAndDownload
+                  >
+                    Download labels
                   </div>
                 </div>
               </div>
@@ -401,14 +494,14 @@ const PostProduct = () => {
               <div className={Style.product_post_options_btn}>
                 <div className={Style.product_post_toggle}>
                   <div className={Style.toggle_switch_container}>
-                    <label
+                    {/* <label
                       htmlFor=""
                       className={Style.product_post_toggle_title}
                     >
                       Link Method:
-                    </label>
+                    </label> */}
 
-                    <div
+                    {/* <div
                       style={{
                         display: "flex",
                         marginLeft: "-25px",
@@ -424,7 +517,9 @@ const PostProduct = () => {
                               : "nfc"
                           )
                         }
-                        checked={product_data?.product_qrcode == "nfc"? true: false}
+                        checked={
+                          product_data?.product_qrcode == "nfc" ? true : false
+                        }
                         inputProps={{ "aria-label": "ant design" }}
                       />
 
@@ -445,11 +540,11 @@ const PostProduct = () => {
                           QR Code
                         </label>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className={Style.product_post_toggle}>
-                  <div className={Style.toggle_switch_container}>
+                  {/* <div className={Style.toggle_switch_container}>
                     <label
                       htmlFor=""
                       className={Style.product_post_toggle_title}
@@ -472,7 +567,11 @@ const PostProduct = () => {
                               : "dollar"
                           );
                         }}
-                        checked={product_data?.product_qrcode == "dollar"? true: false}
+                        checked={
+                          product_data?.product_qrcode == "dollar"
+                            ? true
+                            : false
+                        }
                         inputProps={{ "aria-label": "ant design" }}
                       />
                       <div
@@ -493,9 +592,9 @@ const PostProduct = () => {
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
-                {product_data.product_link == "nfc" ? (
+                {/* {product_data.product_link == "nfc" ? (
                   <></>
                 ) : (
                   <div className={Style.product_post_toggle}>
@@ -523,7 +622,11 @@ const PostProduct = () => {
                                 : "physical"
                             );
                           }}
-                          checked={product_data?.product_qrcode == "physical"? true: false}
+                          checked={
+                            product_data?.product_qrcode == "physical"
+                              ? true
+                              : false
+                          }
                           inputProps={{ "aria-label": "ant design" }}
                         />
                         <div
@@ -546,41 +649,30 @@ const PostProduct = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
-
-              {editProduct? (
-                <div
-                  className={Style.product_order_btn}
-                  onClick={orderEditHandle}
-                >
-                  Order qr And Edit Product
-                </div>
-              ) : (
-                <div
-                  className={Style.product_order_btn}
-                  onClick={orderCreateHandle}
-                >
-                  Order qr And Create Product
-                </div>
-              )}
             </div>
           </Grid>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={5} >
             <div className={Style.product_post_card_section}>
               <div className={Style.product_post_card_box}>
-                <h1>
+                {/* <h1>
                   {product_data.product_link == "nfc" ? (
                     <>NFC Label</>
                   ) : (
                     <>Qr Code</>
                   )}
-                </h1>
+                </h1> */}
                 <div className={Style.product_post_card}>
-                  <h1 className={Style.product_post_card_title}>Cost: $0</h1>
+                  {/* <h1 className={Style.product_post_card_title}>Cost: $0</h1> */}
                   <div className={Style.product_post_card_img_box}>
                     {product_data.product_link == "nfc" ? (
-                      <Image src={images.nfc} alt="image" id="nfc" />
+                      <Image
+                        src={images.fake_product}
+                        alt="image"
+                        id="nfc"
+                        style={{ maxHeight: "610px" }}
+                      />
                     ) : (
                       <QRCode
                         size={150}
@@ -595,7 +687,7 @@ const PostProduct = () => {
                     )}
                   </div>
 
-                  <div className={Style.product_card_btn_box}>
+                  {/* <div className={Style.product_card_btn_box}>
                     <button>Order labels</button>
                     <input
                       placeholder="quantity"
@@ -605,8 +697,8 @@ const PostProduct = () => {
                         productDataHandle("quantity", e.target.value)
                       }
                     />
-                  </div>
-                  {editProduct? (
+                  </div> */}
+                  {/* {editProduct ? (
                     <div
                       className={Style.product_card_download_btn}
                       onClick={editQuantityAndDownload}
@@ -620,14 +712,8 @@ const PostProduct = () => {
                     >
                       Create and Download
                     </div>
-                  )}
+                  )} */}
                 </div>
-                <p>
-                  -Each Item is equivalent to one label or NFC. <br /> <br />
-                  -When you post your item to Bump-me it is the item is tracked
-                  on the blockchain and when the qr code isscanned and marked as
-                  sold an nft will be minted as a receipt.
-                </p>
               </div>
             </div>
           </Grid>
