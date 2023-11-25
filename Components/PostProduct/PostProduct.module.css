@@ -169,8 +169,8 @@
   height: 37px;
   border-radius: 34px;
   background: #303865;
+  font-weight:bold;
 }
-
 
 .content_input input::placeholder {
   color: white;
