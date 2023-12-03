@@ -816,3 +816,12 @@ export const getUser = async (data) => {
     return { success: false, message: "Server Error" };
   }
 };
+
+export const getDeliveryProducts = async (data) => {
+  try {
+    const res = (await api.get(`${config.backend_url}/api/delivery/all`, data)).data;
+    return res;
+  } catch (err) {
+    return { success: false, message: "Server Error" };
+  }
+};
