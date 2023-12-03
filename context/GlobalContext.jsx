@@ -18,7 +18,9 @@ const GlobalContext = createContext({
     paymentVisible: false,
     paymentVisibleHandle: (data) =>{},
     cartData: undefined,
-    cartDataHandle:(data)=>{}
+    cartDataHandle:(data)=>{},
+    selectedSidebar: 1,
+    selectedSidebarHandle:(data)=>{}
 });
 
 const GlobalProviders = (props) => {
@@ -30,7 +32,9 @@ const GlobalProviders = (props) => {
     const [editProduct, setEditProduct] = useState(false);
 
     const [paymentVisible, setPaymentVisible] = useState(false);
-    const [cartData, setCartData] = useState()
+    const [cartData, setCartData] = useState();
+
+    const [selectedSidebar, setSelectedSidebar] = useState(1);
 
     const [product_data, setProductData] = useState({        
         product_name: "",
@@ -38,8 +42,11 @@ const GlobalProviders = (props) => {
         product_desc: "",
         product_type: "local",
         product_link: "nfc",
-        product_payment: "dollar",
+        product_payment: "Payment Type",
+        product_delivery: "Delivery Method",
+        product_category: "Category",
         product_qrcode: "physical",
+        delivery_cost: "",
         quantity: "",
 
         background_color: "",
@@ -55,6 +62,10 @@ const GlobalProviders = (props) => {
         product_file: null,
         product_id:""
     });
+
+    const selectedSidebarHandle = (data) =>{
+        setSelectedSidebar(data)
+    }
 
     const cartDataHandle = (data) =>{
         setCartData(data)
@@ -114,6 +125,7 @@ const GlobalProviders = (props) => {
         editProduct,
         paymentVisible,
         cartData,
+        selectedSidebar,
         setAddress,
         activeSubMenuHandle,
         activeNavbarHandle,
@@ -123,7 +135,8 @@ const GlobalProviders = (props) => {
         editProductHandle,
         editproductDataHandle,
         paymentVisibleHandle,
-        cartDataHandle
+        cartDataHandle,
+        selectedSidebarHandle
     };
 
     return (
