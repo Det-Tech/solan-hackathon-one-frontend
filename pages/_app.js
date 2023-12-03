@@ -8,7 +8,7 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import React, { useMemo, useState, useEffect } from 'react';
 import { PhantomWalletAdapter, SolflareWalletAdapter, UnsafeBurnerWalletAdapter, TorusWalletAdapter} from '@solana/wallet-adapter-wallets';
 import { GlobalProviders } from "../context/GlobalContext";
-import Payment from "../components/Payment/Payment";
+import Payment from "../Components/Payment/Payment";
 const config = require("./../config.json")
 
 function MyApp({ Component, pageProps }) {
