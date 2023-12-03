@@ -18,11 +18,13 @@ const Products = () => {
 
   return (
     <div className={Style.blog_section}>
-      <h1 className={Style.blog_section_title}>&nbsp;&nbsp;&nbsp;&nbsp;Posted Products</h1>
+      <h1 className={Style.blog_section_title}>
+        &nbsp;&nbsp;&nbsp;&nbsp;Posted Products
+      </h1>
       <Grid container>
         {products.map((product, index) => (
-          <Grid xs={12} sm={6} md={4} lg={3} sx={{padding:"20px"}} item>
-          <BlogCard product={product} />
+          <Grid xs={12} sm={6} md={4} lg={3} sx={{ padding: "20px" }} item key={index}>
+            <BlogCard product={product} />
           </Grid>
         ))}
       </Grid>

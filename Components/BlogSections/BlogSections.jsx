@@ -42,7 +42,7 @@ const BlogSections = () => {
   return (
     <div className={Style.blog_section}>
       <h1 className={Style.blog_section_title}>Products</h1>
-      <div >
+      <div>
         <Carousel
           swipeable={true}
           draggable={true}
@@ -60,10 +60,10 @@ const BlogSections = () => {
           itemClass="carousel-item-padding-40-px"
         >
           {products.map((product, index) => (
-              <BlogCard product={product} />
+            <BlogCard product={product} key={index}/>
           ))}
         </Carousel>
-        </div>
+      </div>
     </div>
   );
 };
