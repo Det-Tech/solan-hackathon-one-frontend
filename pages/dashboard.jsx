@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import CreateProduct from "../Components/PostProduct/PostProduct";
-import CreateStore from "../Components/CreateStore/CreateStore";
-import AllProducts from "../Components/Products/Products";
-import Delivery from "../Components/Delivery/Delivery";
-import ProductData from "../Components/ProductData/ProductData";
-import DataComp from "../Components/DataComp/DataComp";
-import Customize from "../Components/Customize/Customize";
-import Survey from "../Components/Survey/Survey";
-import AddAi from "../Components/AddAi/AddAi";
-import NavProfile from "../Components/NavProfile/NavProfile";
-import SideBarAnalytics from "../Components/SideBarAnalytics/SideBarAnalytics";
-import SideBar from "../Components/SideBar/SideBar";
+import CreateProduct from "../components/PostProduct/PostProduct";
+import CreateStore from "../components/CreateStore/CreateStore";
+import AllProducts from "../components/Products/Products";
+import Delivery from "../components/Delivery/Delivery";
+import ProductData from "../components/ProductData/ProductData";
+import DataComp from "../components/DataComp/DataComp";
+import Customize from "../components/Customize/Customize";
+import Survey from "../components/Survey/Survey";
+import AddAi from "../components/AddAi/AddAi";
+import NavProfile from "../components/NavProfile/NavProfile";
+import SideBarAnalytics from "../components/SideBarAnalytics/SideBarAnalytics";
+import SideBar from "../components/SideBar/SideBar";
 import { useGlobal } from "./../context/GlobalContext";
 
 const Dashboard = () => {

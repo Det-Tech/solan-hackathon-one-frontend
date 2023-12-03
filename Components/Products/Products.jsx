@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 //INTERNAL IMPORT
 import Style from "./Products.module.css";
-import BlogCard from "../BlogCard/BlogCard";
+import ProductCard from "../ProductCard/ProductCard";
 
 import { getProducts } from "../../api";
 import { Grid } from "@mui/material";
@@ -24,7 +24,7 @@ const Products = () => {
       <Grid container>
         {products.map((product, index) => (
           <Grid xs={12} sm={6} md={4} lg={3} sx={{ padding: "20px" }} item key={index}>
-            <BlogCard product={product} />
+            <ProductCard product={product} />
           </Grid>
         ))}
       </Grid>
