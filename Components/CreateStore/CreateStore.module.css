@@ -21,13 +21,11 @@
 
 .product_post_input {
   width: 100%;
-  height: 450px;
   display: flex;
 }
 
 .product_data_input {
   width: 100%;
-  height: 450px;
 }
 
 /* ====================== */
@@ -386,7 +384,6 @@
 
 .product_post_card_img_box {
   width: 100%;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

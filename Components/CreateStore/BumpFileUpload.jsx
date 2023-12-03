@@ -4,14 +4,21 @@ import Image from "next/image";
 //INTERNAL IMPORT
 import Style from "./CreateStore.module.css";
 import images from "../../assets";
+const config = require("./../../config.json");
 
-const BumpFileUpload = ({click, addFile, fileInputRef, title, height}) => {
-
+const BumpFileUpload = ({
+  click,
+  addFile,
+  fileInputRef,
+  title,
+  height,
+  url,
+}) => {
   return (
     <>
       <div
         style={{
-          background: "#1C2245",
+          // background: "#1C2245",
           boxShadow:
             "0px 4px 50px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset",
           borderRadius: "10px",
@@ -22,12 +29,14 @@ const BumpFileUpload = ({click, addFile, fileInputRef, title, height}) => {
           display: "flex",
           flexDirection: "column",
           padding: "30px",
+          background: `url(${config.backend_url}/${url})`,
+          backgroundSize: "cover",
         }}
         onClick={() => click()}
         onChange={addFile}
       >
         <input type="file" style={{ display: "none" }} ref={fileInputRef} />
-        <div style={{position:"relative"}}>
+        <div style={{ position: "relative" }}>
           <Image className={Style.circle} src={images.circle} alt="image" />
           <span
             style={{
