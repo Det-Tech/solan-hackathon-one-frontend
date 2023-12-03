@@ -12,10 +12,18 @@ import {
   getRefer,
   getStripeIDFromToken,
   getUserIdFromToken,
+  updateWaxAccount,
+  updateNotification,
+  getUser,
 } from "../../api";
 import { toast } from "react-toastify";
 import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material/styles";
+import * as waxjs from "@waxio/waxjs/dist";
+
+const wax = new waxjs.WaxJS({
+  rpcEndpoint: "https://wax.greymass.com",
+});
 
 const config = require("./../../config.json");
 
@@ -51,6 +59,9 @@ const UserProfile = () => {
   const [refer, setRefer] = useState([]);
   const [refer_link, setReferLink] = useState("");
   const [stripe_id, setStripeID] = useState();
+  const [waxAccount, setWaxAccount] = useState("");
+  const [notificationEmail, setNotificationEmail] = useState(true);
+  const [notificationApp, setNotificationApp] = useState(true);
 
   const fetchWalletForNFTs = async (address) => {
     const connection = new Connection(config.mainnetRPC, "confirmed");
@@ -78,7 +89,20 @@ const UserProfile = () => {
   }, [publicKey]);
 
   useEffect(() => {
-    console.log("get reffer");
+    getUser()
+      .then((data) => {
+        console.log(data);
+        console.log(data.notification);
+        setWaxAccount(data?.waxAccount);
+        setNotificationApp(data?.notification.app);
+        setNotificationEmail(data?.notification.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
     if (getUserIdFromToken()) {
       setReferLink(`${config.frontend_url}/refer/${getUserIdFromToken()}`);
 
@@ -112,6 +136,30 @@ const UserProfile = () => {
     const res = await getOauthStripe(data);
     if (res.success) window.open(res.message, "_blank");
     console.log(res);
+  };
+
+  const waxConnect = async () => {
+    const userAccount = await wax.login();
+    if (userAccount) {
+      setWaxAccount(userAccount);
+      const data = {
+        waxAccount: userAccount,
+      };
+      await updateWaxAccount(data);
+    }
+  };
+
+  const notificationHandler = async (type) => {
+    const data = {
+      email: type == "email" ? "email" : null,
+      app: type == "app" ? "app" : null,
+    };
+    if (type == "email") {
+      setNotificationEmail(!notificationEmail);
+    } else {
+      setNotificationApp(!notificationApp);
+    }
+    await updateNotification(data);
   };
 
   return (
@@ -192,23 +240,35 @@ const UserProfile = () => {
 
         <div className={Style.user_details_third}>
           <h1 className={Style.user_details_title}>Notification settings</h1>
-          <div className={Style.user_details_third_card}  style={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center"}}>
+          <div
+            className={Style.user_details_third_card}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <p>DISABLE / ENABLE</p>
             <div>
-            Email
-            <AntSwitch
-              onChange={() => {
-              }}
-              inputProps={{ "aria-label": "ant design" }}
-            />
+              Email
+              <AntSwitch
+                checked={notificationEmail}
+                onChange={() => {
+                  notificationHandler("email");
+                }}
+                inputProps={{ "aria-label": "ant design" }}
+              />
             </div>
             <div>
-             App
-            <AntSwitch
-              onChange={() => {
-              }}
-              inputProps={{ "aria-label": "ant design" }}
-            />
+              App
+              <AntSwitch
+                checked={notificationApp}
+                onChange={() => {
+                  notificationHandler("app");
+                }}
+                inputProps={{ "aria-label": "ant design" }}
+              />
             </div>
           </div>
         </div>
@@ -220,6 +280,18 @@ const UserProfile = () => {
             <h4>AccountID: {stripe_id} </h4>
             <button onClick={connect} className={Style.user_details_first_btn}>
               <h4 className={Style.user_details_first_h4}>Connect</h4>
+            </button>
+          </div>
+        </div>
+        <div>
+          <h3>Please connect wax wallet</h3>
+          <div>
+            <h4>Account: {waxAccount} </h4>
+            <button
+              onClick={waxConnect}
+              className={Style.user_details_first_btn}
+            >
+              <h4 className={Style.user_details_first_h4}>Wax Connect</h4>
             </button>
           </div>
         </div>

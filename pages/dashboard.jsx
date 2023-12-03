@@ -11,15 +11,16 @@ import AddAi from "../Components/AddAi/AddAi";
 import NavProfile from "../Components/NavProfile/NavProfile";
 import SideBarAnalytics from "../Components/SideBarAnalytics/SideBarAnalytics";
 import SideBar from "../Components/SideBar/SideBar";
+import { useGlobal } from "./../context/GlobalContext";
 
 const Dashboard = () => {
-  const [index, setIndex] = useState(1);
+  const { selectedSidebarHandle, selectedSidebar} = useGlobal();
 
   return (
     <>
       <SideBar />
 
-      <SideBarAnalytics setIndex={setIndex}/>
+      <SideBarAnalytics setIndex={selectedSidebarHandle}/>
 
       <div className="dashboard_page">
         <div className="dashboard_top_nav">
@@ -30,15 +31,15 @@ const Dashboard = () => {
           <NavProfile />
         </div>
         <div className="dashboard_comp">
-          {index == 1 && <CreateProduct />}  {/* create product */}          
-          {index == 2 && <CreateStore />}  {/* create store */}
-          {index == 3 && <AllProducts />}  {/* all products */}
-          {index == 4 && <Delivery />}     {/* deliveries */}
-          {index == 5 && <ProductData />}  {/* product */}
-          {index == 6 && <DataComp />}     {/* data */}
-          {index == 7 && <Customize />}    {/* colors */}
-          {index == 8 && <Survey />}       {/* survey */}
-          {index == 9 && <AddAi />}        {/* ai */}
+          {selectedSidebar == 1 && <CreateProduct />}  {/* create product */}          
+          {selectedSidebar == 2 && <CreateStore />}  {/* create store */}
+          {selectedSidebar == 3 && <AllProducts />}  {/* all products */}
+          {selectedSidebar == 4 && <Delivery />}     {/* deliveries */}
+          {selectedSidebar == 5 && <ProductData />}  {/* product */}
+          {selectedSidebar == 6 && <DataComp />}     {/* data */}
+          {selectedSidebar == 7 && <Customize />}    {/* colors */}
+          {selectedSidebar == 8 && <Survey />}       {/* survey */}
+          {selectedSidebar == 9 && <AddAi />}        {/* ai */}
         </div>
       </div>
     </>

@@ -4,9 +4,9 @@ import Image from "next/image";
 //INTERNAL IMPORT
 import Style from "./PostProduct.module.css";
 import images from "../../assets";
+const config = require("./../../config.json");
 
-const BumpFileUpload = ({click, addFile, fileInputRef, title}) => {
-
+const BumpFileUpload = ({ click, addFile, fileInputRef, title, url }) => {
   return (
     <>
       <div
@@ -22,17 +22,19 @@ const BumpFileUpload = ({click, addFile, fileInputRef, title}) => {
           display: "flex",
           flexDirection: "column",
           padding: "30px",
+          background: `url(${config.backend_url}/${url})`,
+          backgroundSize: "cover",
         }}
         onClick={() => click()}
         onChange={addFile}
       >
         <input type="file" style={{ display: "none" }} ref={fileInputRef} />
-        <div style={{position:"relative"}}>
+        <div style={{ position: "relative" }}>
           <Image className={Style.circle} src={images.circle} alt="image" />
           <span
             style={{
               position: "absolute",
-              left:"8px",
+              left: "8px",
               top: "-10px",
               color: "#FFF",
               textShadow: "0px 4px 20px rgba(255, 255, 255, 0.40)",
