@@ -5,7 +5,7 @@ import Image from "next/image";
 import Style from "./DataComp.module.css";
 import images from "../../assets";
 
-import { getSummary, exportToExcel, getUserIdFromToken } from "../../api";
+import { getSummary, exportToExcel, getUserIdFromToken, cashOut } from "../../api";
 
 import { BarChart } from "@mui/x-charts/BarChart";
 import { Grid } from '@mui/material';
@@ -55,6 +55,12 @@ const DataComp = () => {
     exportToExcel("data", data)    
   }
 
+  const cashOutHandle = async() => {
+    const data = { }
+    await cashOut(data)
+    console.log("cashout...")
+  }
+
   return (
     <>
       <div className={Style.data_section}>
@@ -70,6 +76,12 @@ const DataComp = () => {
             <p>{summary_data.crypto_flow} Sol</p>
             <p className={Style.data_cash_label}>Crypto Flow</p>
           </div>
+          <div className={Style.data_box_single}>
+            <Image className={Style.circle} src={images.circle} alt="image" />
+            <p>{summary_data.crypto_flow} TLM</p>
+            <p className={Style.data_cash_label}>Crypto Flow</p>
+          </div>
+          <div className={Style.data_export_btn} style={{width:300, alignSelf:"center"}} onClick={cashOutHandle}>Cash out</div>
         </div>
         <div className={Style.data_information_box}>
           <Grid container spacing={2}>
