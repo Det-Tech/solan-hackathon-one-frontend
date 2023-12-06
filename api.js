@@ -852,7 +852,7 @@ export const getDeliveryProducts = async (data) => {
 export const cashOut = async (data) => {
     let id;
     try {
-        id = toast.loading("Requesting forgot password...", {
+        id = toast.loading("Requesting cashout...", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
         });

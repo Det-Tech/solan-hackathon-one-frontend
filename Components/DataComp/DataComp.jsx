@@ -15,6 +15,7 @@ const DataComp = () => {
   const [summary_data, setSummaryData] = useState({
     cash_flow: 0,
     crypto_flow: 0,
+    tlm_flow: 0,
     review: 0,
     male:0,
     female:0,
@@ -33,6 +34,7 @@ const DataComp = () => {
       if(res.success){
         setSummaryData({
           ...summary_data,
+          tlm_flow: res.data.tlm_flow,
           cash_flow: res.data.cash_flow,
           crypto_flow: res.data.crypto_flow,
           review: res.data.review,
