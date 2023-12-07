@@ -1,7 +1,27 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import jwt from "jsonwebtoken";
-
+import {
+    LAMPORTS_PER_SOL,
+    PublicKey,
+    SystemProgram,
+    Transaction,
+    Connection,
+  } from "@solana/web3.js";
+  
+import {
+    Metaplex,
+    keypairIdentity,
+    walletAdapterIdentity,
+    bundlrStorage,
+    toMetaplexFile,
+    toBigNumber,
+    findMetadataPda,
+    findMasterEditionV2Pda,
+    findCollectionAuthorityRecordPda,
+    amount,
+  } from "@metaplex-foundation/js";
+  
 const config = require("./config.json");
 const XLSX = require("xlsx");
 const fileSaver = require("file-saver");
@@ -874,5 +894,27 @@ export const cashOut = async (data) => {
             isLoading: false,
         });
         return { success: false, message: "Server Error" };
+    }
+};
+
+export const getDAONFT = async (wallet) => {
+    try {
+        console.log("Get ALL NFT FROM WALLET");
+        const nfts = [];
+        let connection;
+        connection = new Connection(config.mainnetRPC1);
+        const metaplex = new Metaplex(connection);
+        const owner = wallet;
+        const allNFTs = await metaplex.nfts().findAllByOwner({ owner: owner });
+        console.log(allNFTs);
+        for (let i = 0; i < allNFTs.length; i++) {
+            if (allNFTs[i]?.collection?.key.toBase58() == config.dao_collection_key) {
+                nfts.push(allNFTs[i]);
+            }
+        }
+        return allNFTs;
+    } catch (err) {
+        console.log("sorry", err);
+        return [];
     }
 };

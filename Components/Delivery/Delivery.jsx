@@ -77,7 +77,7 @@ const Delivery = () => {
               </Grid>
               {deliveries &&
                 deliveries.map((item, index) => (
-                  <Fragment>
+                  <Fragment key={index}>
                     <Grid xs={3} md={3} item>
                       {item?.product_id?.product_file != "" ? (
                         <img

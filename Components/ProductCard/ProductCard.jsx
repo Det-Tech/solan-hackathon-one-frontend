@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 
 import { useGlobal } from "../../context/GlobalContext";
 import { useRouter } from "next/router";
+import QRCodeAs from "qrcode";
 
 const config = require("../../config.json");
 
@@ -34,6 +35,22 @@ const ProductCard = ({ product }) => {
     selectedSidebarHandle(1);
     router.push("/dashboard");
   };
+
+  const qrDownloadHandle = async (product_id, name) =>{
+    try {
+      const qr = await QRCodeAs.toDataURL(
+        `${config.frontend_url}/product/${product_id}`
+      );
+      const link = document.createElement("a");
+      link.download = name;
+      link.href = qr;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <>
@@ -78,6 +95,7 @@ const ProductCard = ({ product }) => {
             />
             <div className={Style.blog_button_container}>
               {product?.user_id == userId ? (
+                <>
                 <div
                   className={Style.blog_content_bottom_btn}
                   onClick={() => {
@@ -91,6 +109,20 @@ const ProductCard = ({ product }) => {
                   />
                   <p>Edit</p>
                 </div>
+                <div
+                className={Style.blog_content_bottom_btn}
+                onClick={() => {
+                  qrDownloadHandle(product?.product_id, product?.product_name);
+                }}
+              >
+                <Image
+                  className={Style.blog_content_bottom_btn_eye}
+                  src={images.eye}
+                  alt="image"
+                />
+                <p>Qr</p>
+              </div>
+              </>
               ) : null}
               <div
                 className={Style.blog_content_bottom_btn}

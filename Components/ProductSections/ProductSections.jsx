@@ -3,7 +3,7 @@ import Image from "next/image";
 
 //INTERNAL IMPORT
 import Style from "./ProductSections.module.css";
-import ProductCard from "../ProductCard/ProductCard";
+import ProductCard from "./../ProductCard/ProductCard";
 
 import { getProducts } from "../../api";
 import { Grid } from "@mui/material";
