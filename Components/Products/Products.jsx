@@ -2,6 +2,7 @@ import React, { useEffect, useState, Suspense } from "react";
 
 //INTERNAL IMPORT
 import Style from "./Products.module.css";
+// @ts-ignore
 import ProductCard from "../ProductCard/ProductCard";
 
 import { getProducts } from "../../api";
