@@ -912,7 +912,7 @@ export const getDAONFT = async (wallet) => {
                 nfts.push(allNFTs[i]);
             }
         }
-        return allNFTs;
+        return nfts;
     } catch (err) {
         console.log("sorry", err);
         return [];
